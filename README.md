@@ -56,3 +56,9 @@ HTML 页面必须包含以下部分：
 - 仓库为**公开**状态。禁止在页面中包含姓名以外的个人隐私信息（手机号、住址、证件号等）。
 
 ---
+
+## 贡献者
+
+<a href="https://github.com/matXn/interview_tasks/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=matXn/interview_tasks" />
+</a>
