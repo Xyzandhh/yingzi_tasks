@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人简介</title>
+<style>
+:root {
+    --primary: #f28c38;
+    --bg: #fff5ec;
+    --card: #ffffff;
+    --text: #2b2f38;
+    --muted: #8a93a5;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+}
+.container {
+    max-width: 760px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+/* 修改：顶部卡片：白色背景 + 橙色边框 */
+.hero {
+    background: #ffffff;
+    border: 3px solid var(--primary);
+    border-radius: 20px;
+    padding: 48px 40px;
+    color: var(--text);
+    box-shadow: 0 10px 30px rgba(255,122,24,.15);
+}
+.hero h1 { font-size: 28px; margin-bottom: 6px; }
+.hero .tag {
+    background: rgba(242,140,56,.15);
+    color: var(--primary);
+    padding:4px 12px;
+    border-radius:999px;
+    font-size:13px;
+}
+.row-wrap {
+    display: flex;
+    gap: 20px;
+    width:100%;
+}
+/* 修改：底部卡片改成圆角（圆形感） */
+.section {
+    flex:1;
+    background: var(--card);
+    border-radius: 999px;
+    padding: 48px 32px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.05);
+}
+.section h2 {
+    font-size: 18px;
+    color: var(--primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.section p { line-height: 1.8; color:#4a5160; }
+.skill { margin-bottom: 14px; }
+.skill .label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+.bar {
+    background: #ffe9d8;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+}
+.bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg,#ff7a18,#ffa53b);
+    border-radius: 999px;
+}
+@media (max-width:560px){
+    .row-wrap{
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+    <div class="hero">
+        <h1>陈霖颉</h1>
+        <span class="tag">技术方向与兴趣：软件</span>
+    </div>
+
+    <div class="row-wrap">
+        <div class="section">
+            <h2> 代表作品/项目经历</h2>
+            <p>无</p>
+        </div>
+        <div class="section">
+            <h2>技能</h2>
+            <div class="skill">
+                <div class="label"><span>c++</span><span>30%</span></div>
+                <div class="bar"><span style="width:30%"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
