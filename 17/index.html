@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LCC | 个人小站</title>
+    <style>
+      :root {
+        --paper: #fffaf5;
+        --ink: #332f3a;
+        --muted: #77717d;
+        --pink: #f5a8b9;
+        --pink-light: #fff0f3;
+        --mint: #b6dfce;
+        --mint-light: #edf9f4;
+        --lavender: #c9b8eb;
+        --yellow: #f6d88a;
+        --line: #e8dfe2;
+        --white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 8% 12%, rgba(245, 168, 185, 0.23) 0 5px, transparent 6px),
+          radial-gradient(circle at 88% 28%, rgba(201, 184, 235, 0.3) 0 4px, transparent 5px),
+          #f7f1ed;
+        color: var(--ink);
+        font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        line-height: 1.65;
+      }
+
+      .cursor-spark {
+        position: fixed;
+        z-index: 999;
+        width: 10px;
+        height: 10px;
+        pointer-events: none;
+        border-radius: 50%;
+        background: var(--pink);
+        box-shadow: 0 0 14px rgba(245, 168, 185, 0.55);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+        animation: sparkle 720ms ease-out forwards;
+      }
+
+      .cursor-spark:nth-child(3n) {
+        background: var(--mint);
+        box-shadow: 0 0 14px rgba(182, 223, 206, 0.6);
+      }
+
+      .cursor-spark:nth-child(3n + 1) {
+        background: var(--lavender);
+        box-shadow: 0 0 14px rgba(201, 184, 235, 0.62);
+      }
+
+      @keyframes sparkle {
+        0% {
+          opacity: 0.9;
+          transform: translate(-50%, -50%) scale(1);
+        }
+
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.15) translateY(-12px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .cursor-spark {
+          display: none;
+        }
+      }
+
+      main {
+        width: min(1050px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 64px;
+      }
+
+      .site {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--paper);
+        box-shadow: 0 20px 60px rgba(92, 68, 81, 0.12);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 22px;
+        border-bottom: 1px solid var(--line);
+        background: var(--white);
+      }
+
+      .brand {
+        color: var(--ink);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .brand span {
+        color: var(--pink);
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 16px;
+      }
+
+      nav a {
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+
+      nav a:hover,
+      nav a:focus {
+        color: var(--ink);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 250px;
+        gap: 48px;
+        align-items: center;
+        padding: 70px 72px;
+        background:
+          linear-gradient(135deg, rgba(255, 240, 243, 0.9), transparent 50%),
+          var(--paper);
+      }
+
+      .hello {
+        margin: 0 0 10px;
+        color: #b66d80;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(4rem, 12vw, 7.6rem);
+        letter-spacing: 0;
+        line-height: 0.92;
+      }
+
+      .hero-copy {
+        max-width: 38rem;
+        margin-top: 22px;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+
+      .hero-note {
+        display: inline-block;
+        margin-top: 24px;
+        padding: 8px 14px;
+        border: 1px solid #edd3b2;
+        border-radius: 999px;
+        background: #fff8e7;
+        color: #886b3f;
+        font-size: 0.9rem;
+        transform: rotate(-2deg);
+      }
+
+      .avatar-wrap {
+        position: relative;
+        width: 208px;
+        height: 208px;
+        margin: 0 auto;
+      }
+
+      .avatar-wrap::before,
+      .avatar-wrap::after {
+        position: absolute;
+        color: var(--pink);
+        font-size: 1.6rem;
+        font-weight: 700;
+      }
+
+      .avatar-wrap::before {
+        top: -16px;
+        right: 8px;
+        content: "✦";
+      }
+
+      .avatar-wrap::after {
+        bottom: 8px;
+        left: -8px;
+        color: var(--lavender);
+        content: "♡";
+      }
+
+      .avatar {
+        width: 100%;
+        height: 100%;
+        border: 8px solid var(--white);
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+        background: var(--white);
+        box-shadow: 0 10px 0 var(--pink), 0 18px 26px rgba(115, 79, 94, 0.16);
+      }
+
+      .section {
+        padding: 54px 72px;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .section-heading h2 {
+        font-size: 1.7rem;
+      }
+
+      .section-heading p {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .about-grid,
+      .skill-grid,
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .panel {
+        min-height: 150px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--white);
+      }
+
+      .panel-pink {
+        background: var(--pink-light);
+      }
+
+      .panel-mint {
+        background: var(--mint-light);
+      }
+
+      .panel-lavender {
+        background: #f4f0ff;
+      }
+
+      .panel-yellow {
+        background: #fff8e7;
+      }
+
+      .panel h3 {
+        margin-bottom: 10px;
+        font-size: 1.05rem;
+      }
+
+      .panel p,
+      .panel li {
+        color: var(--muted);
+      }
+
+      .panel ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .panel li + li {
+        margin-top: 5px;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tag {
+        padding: 5px 11px;
+        border-radius: 999px;
+        background: var(--white);
+        color: var(--ink);
+        font-size: 0.88rem;
+      }
+
+      .tool-note {
+        margin-top: 12px;
+      }
+
+      .model-card {
+        display: grid;
+        grid-template-columns: 110px minmax(0, 1fr);
+        gap: 22px;
+        align-items: center;
+        padding: 24px;
+        border: 1px solid #decff2;
+        border-radius: 14px;
+        background: #f4f0ff;
+      }
+
+      .model-mark {
+        display: grid;
+        width: 92px;
+        height: 92px;
+        place-items: center;
+        border: 1px solid #decff2;
+        border-radius: 24px;
+        background: var(--white);
+        color: var(--lavender);
+        font-size: 2.2rem;
+      }
+
+      .model-card h3 {
+        margin-bottom: 8px;
+        font-size: 1.15rem;
+      }
+
+      .model-card p {
+        color: var(--muted);
+      }
+
+      .project {
+        display: flex;
+        min-height: 170px;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .project-link {
+        align-self: flex-start;
+        color: #a05e73;
+        font-weight: 700;
+        text-underline-offset: 4px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 22px 72px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      footer a {
+        color: var(--muted);
+      }
+
+      @media (max-width: 720px) {
+        main {
+          width: min(100% - 18px, 1050px);
+          padding-top: 10px;
+        }
+
+        .topbar,
+        footer {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        nav {
+          justify-content: flex-start;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 34px;
+          padding: 46px 26px 56px;
+        }
+
+        .avatar-wrap {
+          margin-left: 8px;
+        }
+
+        .section {
+          padding: 40px 26px;
+        }
+
+        .about-grid,
+        .skill-grid,
+        .project-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .model-card {
+          grid-template-columns: 1fr;
+        }
+
+        footer {
+          padding: 22px 26px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="site">
+        <div class="topbar">
+          <a class="brand" href="#home">LCC<span> · 17</span></a>
+          <nav aria-label="页面导航">
+            <a href="#about">关于我</a>
+            <a href="#skills">技能</a>
+            <a href="#modeling">数学建模</a>
+            <a href="#projects">项目</a>
+          </nav>
+        </div>
+
+        <header class="hero" id="home">
+          <div>
+            <p class="hello">你好呀，我是</p>
+            <h1>LCC</h1>
+            <p class="hero-copy">
+              对硬件和软件都感兴趣，喜欢把新想法一点点做出来。平时会接触编程，也会用实践认识更多有趣的技术。
+            </p>
+            <p class="hero-note">保持好奇，慢慢做出来</p>
+          </div>
+          <div class="avatar-wrap">
+            <img class="avatar" src="avatar.png" alt="LCC 的头像" />
+          </div>
+        </header>
+
+        <section class="section" id="about">
+          <div class="section-heading">
+            <h2>关于我</h2>
+            <p>一些简单的自我介绍</p>
+          </div>
+          <div class="about-grid">
+            <article class="panel panel-pink">
+              <h3>我的方向</h3>
+              <p>硬件与软件。喜欢了解电子设备，也喜欢研究程序是怎样运行起来的。</p>
+            </article>
+            <article class="panel panel-mint">
+              <h3>我的兴趣</h3>
+              <p>编程、电子设备、数学建模，以及把一个小想法变成可以运行的作品。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="skills">
+          <div class="section-heading">
+            <h2>技能和工具</h2>
+            <p>接触过的一些内容</p>
+          </div>
+          <div class="skill-grid">
+            <article class="panel panel-yellow">
+              <h3>接触过的内容</h3>
+              <div class="tags">
+                <span class="tag">软硬件结合</span>
+                <span class="tag">网页制作</span>
+                <span class="tag">AI 工具</span>
+                <span class="tag">模型建立</span>
+                <span class="tag">论文修改</span>
+              </div>
+            </article>
+            <article class="panel panel-lavender">
+              <h3>喜欢的事情</h3>
+              <ul>
+                <li>把复杂的问题拆成小步骤</li>
+                <li>边实践边学习新知识</li>
+                <li>和队友一起完成有趣的作品</li>
+              </ul>
+            </article>
+            <article class="panel panel-mint">
+              <h3>页面小站</h3>
+              <div class="tags">
+                <span class="tag">页面排版</span>
+                <span class="tag">配色设计</span>
+                <span class="tag">响应式布局</span>
+                <span class="tag">交互效果</span>
+              </div>
+            </article>
+            <article class="panel panel-pink">
+              <h3>我的 AI 搭子</h3>
+              <div class="tags">
+                <span class="tag">Codex</span>
+                <span class="tag">DeepSeek</span>
+              </div>
+              <p class="tool-note">主用 Codex 辅助写代码、理思路，也用过它接入 DeepSeek 的能力。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="modeling">
+          <div class="section-heading">
+            <h2>数学建模</h2>
+            <p>把现实问题变成可以研究的问题</p>
+          </div>
+          <article class="model-card">
+            <div class="model-mark">∑</div>
+            <div>
+              <h3>我参加过数学建模</h3>
+              <p>
+                在数学建模中主要参与模型建立、论文生成和修改，也练习了把问题分析清楚、把结论表达清楚。
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" id="projects">
+          <div class="section-heading">
+            <h2>项目经历</h2>
+            <p>代码和更多记录</p>
+          </div>
+          <div class="project-grid">
+            <article class="panel project panel-pink">
+              <div>
+                <h3>GitHub 个人仓库</h3>
+                <p>这里放着我以前做过的一些项目和练习记录。</p>
+              </div>
+              <a class="project-link" href="https://github.com/eilouxixi">github.com/eilouxixi</a>
+            </article>
+            <article class="panel project panel-mint">
+              <div>
+                <h3>小目标</h3>
+                <p>继续整理以前做过的内容，也尝试把新的小想法做成作品。</p>
+              </div>
+              <span class="tag">keep building</span>
+            </article>
+          </div>
+        </section>
+
+        <footer>
+          <span>感谢你来看我的小站 · 17</span>
+          <a href="#home">回到顶部 ↑</a>
+        </footer>
+      </div>
+    </main>
+    <script>
+      (() => {
+        const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!canHover || reduceMotion) return;
+
+        let lastSpark = 0;
+        window.addEventListener("pointermove", (event) => {
+          const now = Date.now();
+          if (now - lastSpark < 34) return;
+          lastSpark = now;
+
+          const spark = document.createElement("span");
+          spark.className = "cursor-spark";
+          spark.style.left = `${event.clientX}px`;
+          spark.style.top = `${event.clientY}px`;
+          document.body.appendChild(spark);
+          window.setTimeout(() => spark.remove(), 760);
+        });
+      })();
+    </script>
+  </body>
+</html>
