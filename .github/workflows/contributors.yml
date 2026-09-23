@@ -1,0 +1,44 @@
+name: Update Contributors
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-contributors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate contributors list
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          export CONTRIBUTORS=$(gh api "repos/$REPO/contributors" \
+            --jq '.[] | select(.login | test("\\[bot\\]") | not) | "[![@\(.login)](https://github.com/\(.login).png?size=64)](https://github.com/\(.login))"' \
+            | tr '\n' ' ')
+          python3 - <<'EOF'
+          import re, os
+          with open('README.md', encoding='utf-8') as f:
+              readme = f.read()
+          block = ("<!-- CONTRIBUTORS:START -->\n"
+                   + os.environ['CONTRIBUTORS'] +
+                   "\n<!-- CONTRIBUTORS:END -->")
+          readme = re.sub(
+              r'<!-- CONTRIBUTORS:START -->.*?<!-- CONTRIBUTORS:END -->',
+              block, readme, flags=re.S)
+          with open('README.md', 'w', encoding='utf-8') as f:
+              f.write(readme)
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --staged --quiet || (git commit -m "docs: update contributors" && git push)

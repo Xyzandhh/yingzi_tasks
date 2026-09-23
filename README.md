@@ -56,6 +56,5 @@ HTML 页面需要包含以下部分：
 
 ## 贡献者
 
-<a href="https://github.com/matXn/interview_tasks/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=matXn/interview_tasks&max=100" />
-</a>
+<!-- CONTRIBUTORS:START -->
+<!-- CONTRIBUTORS:END -->
