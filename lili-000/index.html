@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人简介</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    min-height: 100vh;
+    background: #f6f7fc;
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    color: #1c2033;
+    line-height: 1.6;
+    animation: fadeIn 0.8s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* —— 顶部导航 —— */
+  .top-nav {
+    background: linear-gradient(90deg, #6b8bff, #a58bff);
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 2rem;
+    box-shadow: 0 2px 12px -4px rgba(107, 139, 255, 0.5);
+  }
+
+  .top-nav .logo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .top-nav .menu {
+    display: flex;
+    gap: 1.6rem;
+    font-size: 0.95rem;
+  }
+
+  .top-nav .menu span {
+    cursor: default;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  .top-nav .menu span:hover { opacity: 1; text-decoration: underline; }
+
+  /* —— 顶部横幅 —— */
+  .hero {
+    height: 220px;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.22) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.18) 0%, transparent 45%),
+      linear-gradient(135deg, #6b8bff 0%, #8fa5ff 45%, #a58bff 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(246, 247, 252, 0.9) 100%);
+  }
+
+  /* —— 主体内容 —— */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+    margin-top: -50px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ———— */
+  .section {
+    margin-bottom: 3.2rem;
+    animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2544;
+    margin-bottom: 1.6rem;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #6b8bff;
+    box-shadow: 0 0 0 4px rgba(107, 139, 255, 0.18);
+    flex-shrink: 0;
+  }
+
+  /* —— 个人信息：—— */
+  .info-row {
+    display: inline-block;
+    padding: 1rem 1.6rem;
+    font-size: 1rem;
+    color: #2a3050;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px -8px rgba(107, 139, 255, 0.25),
+                inset 0 0 0 1px rgba(107, 139, 255, 0.15);
+  }
+
+  .info-row .key {
+    color: #6b8bff;
+    font-weight: 600;
+    margin-right: 0.4rem;
+  }
+
+  /* —— 技术方向与兴趣：—— */
+  .tag-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: #1f2544;
+    background: #ffffff;
+    border: 1px solid rgba(107, 139, 255, 0.18);
+    box-shadow: 0 4px 12px -6px rgba(107, 139, 255, 0.3);
+    border-radius: 999px;
+    transition: all 0.25s ease;
+  }
+
+  .tag:hover {
+    transform: translateY(-3px);
+    border-color: #a9bcff;
+    box-shadow: 0 10px 18px -8px rgba(107, 139, 255, 0.55);
+  }
+
+  .tag .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #6b8bff;
+    flex-shrink: 0;
+  }
+
+  /* —— 技能列表 —— */
+  .skill {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .skill:last-of-type { margin-bottom: 0; }
+
+  .skill .label {
+    min-width: 150px;
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: #2a3050;
+    flex-shrink: 0;
+  }
+
+  .skill .track {
+    flex: 1;
+    height: 10px;
+    background: #e9ecf7;
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(107, 139, 255, 0.12);
+  }
+
+  .skill .fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #6b8bff, #a58bff);
+    width: 0;
+    animation: grow 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    box-shadow: 0 0 8px rgba(107, 139, 255, 0.5);
+  }
+
+  @keyframes grow {
+    to { width: var(--w); }
+  }
+
+  .skill .pct {
+    min-width: 48px;
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5a6285;
+    flex-shrink: 0;
+  }
+
+  /* —— 技能补充说明 —— */
+  .extra-list {
+    margin-top: 1.8rem;
+    padding-left: 0;
+  }
+
+  .extra-list li {
+    list-style: none;
+    position: relative;
+    padding-left: 1.3rem;
+    font-size: 0.95rem;
+    color: #3d4460;
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  .extra-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #6b8bff;
+    box-shadow: 0 0 0 3px rgba(107, 139, 255, 0.15);
+  }
+
+  /* —— 页脚 —— */
+  .footer {
+    text-align: center;
+    padding: 1.4rem 1rem;
+    font-size: 0.85rem;
+    color: #7a84a8;
+    background: linear-gradient(90deg, #eef1ff, #f3eeff);
+    border-top: 1px solid rgba(107, 139, 255, 0.18);
+  }
+
+  /* —— 响应式 —— */
+  @media (max-width: 720px) {
+    .top-nav { padding: 0.8rem 1.2rem; }
+    .top-nav .menu { gap: 1rem; font-size: 0.85rem; }
+    .container { padding: 0 1.2rem 3rem; }
+    .hero { height: 170px; }
+    .skill { flex-wrap: wrap; gap: 0.5rem; }
+    .skill .label { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <div class="top-nav">
+    <div class="logo">个人简介</div>
+    <div class="menu">
+      <span>个人信息</span>
+      <span>技术方向</span>
+      <span>掌握技能</span>
+    </div>
+  </div>
+
+  <!-- 顶部横幅 -->
+  <div class="hero"></div>
+
+  <!-- 主体内容 -->
+  <div class="container">
+
+    <!-- 模块一：个人信息 -->
+    <section class="section">
+      <h2 class="section-title">个人信息</h2>
+      <div class="info-row">
+        <span class="key">姓名：</span>李嘉娜
+      </div>
+    </section>
+
+    <!-- 模块二：技术方向与兴趣 -->
+    <section class="section">
+      <h2 class="section-title">技术方向与兴趣</h2>
+      <div class="tag-wrap">
+        <span class="tag"><span class="dot"></span>C / C++ 开发</span>
+        <span class="tag"><span class="dot"></span>算法与数据结构</span>
+        <span class="tag"><span class="dot"></span>Web 前端</span>
+        <span class="tag"><span class="dot"></span>数据通信</span>
+        <span class="tag"><span class="dot"></span>网络编程</span>
+        <span class="tag"><span class="dot"></span>程序性能优化</span>
+        <span class="tag"><span class="dot"></span>开源工具与生态</span>
+      </div>
+    </section>
+
+    <!-- 模块三：掌握的技能 -->
+    <section class="section">
+      <h2 class="section-title">掌握的技能</h2>
+
+      <div class="skill">
+        <span class="label">C / C++</span>
+        <div class="track"><div class="fill" style="--w: 85%;"></div></div>
+        <span class="pct">85%</span>
+      </div>
+
+      <div class="skill">
+        <span class="label">算法与数据结构</span>
+        <div class="track"><div class="fill" style="--w: 82%;"></div></div>
+        <span class="pct">82%</span>
+      </div>
+
+      <div class="skill">
+        <span class="label">HTML / CSS</span>
+        <div class="track"><div class="fill" style="--w: 78%;"></div></div>
+        <span class="pct">78%</span>
+      </div>
+
+      <div class="skill">
+        <span class="label">数据通信基础</span>
+        <div class="track"><div class="fill" style="--w: 75%;"></div></div>
+        <span class="pct">75%</span>
+      </div>
+
+      <div class="skill">
+        <span class="label">网络协议 (TCP/IP)</span>
+        <div class="track"><div class="fill" style="--w: 72%;"></div></div>
+        <span class="pct">72%</span>
+      </div>
+
+      <ul class="extra-list">
+        <li>熟悉常用数据结构（链表、栈、队列、树、哈希表）及基础算法（排序、查找、递归、动态规划入门）</li>
+        <li>了解数据通信基本原理，掌握 TCP/IP 分层模型与常见协议</li>
+        <li>能用 HTML / CSS 完成静态页面布局，理解响应式设计基础</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- 页脚 -->
+  <div class="footer">© 个人简介</div>
+
+</body>
+</html>
