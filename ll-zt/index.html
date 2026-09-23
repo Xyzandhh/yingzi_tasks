@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简介</title>
+    <style>
+        /* 重置与全局 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #facc15;
+
+            --text-light: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.75);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+            background-color: #1a1a2e;
+            /* 备用底色 */
+
+            /* 背景 */
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)),
+                url('https://img-baofun.zhhainiao.com/pcwallpaper_ugc/scene/e464dabbe1ed24eaeae821acf1b24a39.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 首屏区域 */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 70vh;
+            width: 100%;
+        }
+
+        /* 头像 */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* 引言 */
+        .quote {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .quote::before,
+        .quote::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        /* 名字 */
+        .name {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 方向 */
+        .title {
+            font-size: 1.1rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+
+
+        /* 向下箭头动画 */
+        .scroll-down {
+            font-size: 1.5rem;
+            color: var(--accent);
+            animation: bounce 2s infinite;
+            margin-top: auto;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* 核心内容区域（卡片） */
+        .content-wrapper {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .section-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .section-title {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 方向 Grid */
+        .direction-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .direction-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .direction-item p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* 技能标签 */
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: rgba(250, 204, 21, 0.15);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--accent);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* 项目列表 */
+        .project-item {
+            border-left: 3px solid var(--accent);
+            padding-left: 16px;
+            margin-bottom: 16px;
+        }
+
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .project-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 480px) {
+            .name {
+                font-size: 2rem;
+            }
+
+            .direction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 首屏区域-->
+    <div class="hero">
+        <div class="avatar"><img src="https://pic1.zhimg.com/v2-b6061af98c27a192d6203506a1439678_r.jpg"
+                style="width:100%;height:100%;border-radius:50%;object-fit:cover;""></div>
+
+        <div class=" quote">业精于勤，荒于嬉；行成于思，毁于随。</div>
+
+        <h1 class="name">ll-zt</h1>
+        <div class="title">保持好奇，愿意不断学习，体验新事物</div>
+
+        <div class="scroll-down">↓</div>
+    </div>
+
+
+    <div class="content-wrapper">
+        <section class="section-card">
+            <h2 class="section-title">💡 技术方向与兴趣</h2>
+            <div class="direction-grid">
+                <div class="direction-item">
+                    <h3>💻 技术方向</h3>
+                    <p>软件方向</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-title">⚙️ 掌握的技能</h2>
+            <div class="skills-wrapper">
+                <span class="skill-tag">C </span>
+                <span class="skill-tag">java</span>
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+                <span class="skill-tag">JavaScript</span>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-title">🚀代码经历</h2>
+            <div class="project-item">
+                <div class="project-title">校园二手交易平台</div>
+                <div class="project-desc">基于html+css+JavaScript+java用trae完成app端简易的校园二手交易小程序</div>
+            </div>
+
+        </section>
+    </div>
+
+</body>
+
+</html>
